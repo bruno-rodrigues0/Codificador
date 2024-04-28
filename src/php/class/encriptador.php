@@ -2,9 +2,9 @@
 
 class encriptador
 {
-    private string $encriptar, $codificado;
+    private  $encriptar, $codificado;
 
-    public function __construct(string $frase)
+    public function __construct($frase)
     {
         $this->setEncriptar($frase);
     }
@@ -12,7 +12,7 @@ class encriptador
     /**
      * Get the value of encriptar
      */
-    public function getEncriptar() : string
+    public function getEncriptar()
     {
         return $this->encriptar;
     }
@@ -22,7 +22,7 @@ class encriptador
      *
      * @return  self
      */
-    public function setEncriptar(string $encriptar)
+    public function setEncriptar($encriptar)
     {
         $this->encriptar = str_replace(" ", "", $encriptar);;
         return $this;
@@ -31,7 +31,7 @@ class encriptador
     /**
      * Get the value of codificado
      */
-    public function getCodificado() : string
+    public function getCodificado()
     {
         return $this->codificado;
     }
@@ -41,7 +41,7 @@ class encriptador
      *
      * @return  self
      */
-    public function setCodificado(string $codificado)
+    public function setCodificado($codificado)
     {
         $this->codificado = $codificado;
         return $this;
