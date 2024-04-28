@@ -2,8 +2,7 @@
 
 class encriptador
 {
-    private $encriptar;
-    private $decodificado;
+    private  $encriptar, $codificado;
 
     public function __construct($frase)
     {
@@ -25,97 +24,55 @@ class encriptador
      */
     public function setEncriptar($encriptar)
     {
-        $this->encriptar = str_replace(" ", "+", $encriptar);;
-
+        $this->encriptar = str_replace(" ", "", $encriptar);;
         return $this;
     }
 
     /**
-     * Get the value of decodificado
+     * Get the value of codificado
      */
-    public function getDecodificado()
+    public function getCodificado()
     {
-        return $this->decodificado;
+        return $this->codificado;
     }
 
     /**
-     * Set the value of decodificado
+     * Set the value of codificado
      *
      * @return  self
      */
-    public function setDecodificado($decodificado)
+    public function setCodificado($codificado)
     {
-        $this->decodificado = $decodificado;
-
+        $this->codificado = $codificado;
         return $this;
     }
 
-    public function encriptar()
+    public function encriptar() : void
     {
-        $letras[1] = "q";
-        $letras[2] = "w";
-        $letras[3] = "e";
-        $letras[4] = "r";
-        $letras[5] = "t";
-        $letras[6] = "y";
-        $letras[7] = "u";
-        $letras[8] = "i";
-        $letras[9] = "o";
-        $letras[10] = "p";
-        $letras[11] = "a";
-        $letras[12] = "s";
-        $letras[13] = "d";
-        $letras[14] = "f";
-        $letras[15] = "g";
-        $letras[16] = "h";
-        $letras[17] = "j";
-        $letras[18] = "k";
-        $letras[19] = "l";
-        $letras[20] = "ç";
-        $letras[21] = "z";
-        $letras[22] = "x";
-        $letras[23] = "c";
-        $letras[24] = "v";
-        $letras[25] = "b";
-        $letras[26] = "n";
-        $letras[27] = "m";
-        $letras[28] = "+";
-
+        $letras = "qwertyuiopasdfghjklçzxcvbnm";
         $string = $this->getEncriptar();
-        $arr1 = str_split($string);
-        if ($string == !null) {
-            for ($y = 0; $y < sizeof($arr1); $y++) {
-                $i = 1;
-                do {
-                    if ($arr1[$y] == $letras[28]) {
-                        $contador = 28;
-                    } else {
-                        if ($letras[$i] == $arr1[$y]) {
-                            $contador = $i;
-                        }
-                    }
+
+        if ($string) {
+            for ($y = 0; $y < strlen($string); $y++) {
+                $i = 0;
+                $contador = 0;
+                while($i < strlen($letras)){
+                    $string[$y] === $letras[$i] ? $contador = $i : 'ok';
                     $i++;
-                } while (sizeof($letras) > $i);
-                if ($contador == 28) {
-                    $suce = 28;
-                    $ante = 28;
-                } else {
-                    $suce = $contador + 1;
-                    if ($suce == 28) {
-                        $suce = 1;
-                    }
-                    $ante = $contador - 1;
-                    if ($ante == 0) {
-                        $ante = 27;
-                    }
                 }
+
+                $suce = $contador + 1;
+                $ante = $contador - 1;
+                $suce > 27 ? $suce = 0 : 'ok';
+                $ante < 0 ? $ante = 27 : 'ok';
+
                 $duplas[$y] = $letras[$ante] . $letras[$suce];
             }
             for ($i = 0; $i < sizeof($duplas); $i++) {
-                print "<span>$duplas[$i]</span>";
+                $this->setCodificado($this->getCodificado() . $duplas[$i]);
             }
         } else {
-            echo 'Não há mensagem para ser decodificada';
+            $this->setCodificado("Não há mensagem para codificar");
         }
     }
 }
