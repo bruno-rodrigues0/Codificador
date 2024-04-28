@@ -25,7 +25,7 @@ class encriptador
      */
     public function setEncriptar($encriptar)
     {
-        $this->encriptar = $encriptar;
+        $this->encriptar = str_replace(" ", "+", $encriptar);;
 
         return $this;
     }
@@ -79,22 +79,43 @@ class encriptador
         $letras[25] = "b";
         $letras[26] = "n";
         $letras[27] = "m";
-        $letras[28] = "";
+        $letras[28] = "+";
 
-        $sting = $this->getEncriptar();
-        $arr1 = str_split($sting);
-        for ($y = 0; $y < sizeof($arr1); $y++) {
-            $i = 1;
-            do {
-                if ($letras[$i] == $arr1[$y]) {
-                    $contador = $i;
+        $string = $this->getEncriptar();
+        $arr1 = str_split($string);
+        if ($string == !null) {
+            for ($y = 0; $y < sizeof($arr1); $y++) {
+                $i = 1;
+                do {
+                    if ($arr1[$y] == $letras[28]) {
+                        $contador = 28;
+                    } else {
+                        if ($letras[$i] == $arr1[$y]) {
+                            $contador = $i;
+                        }
+                    }
+                    $i++;
+                } while (sizeof($letras) > $i);
+                if ($contador == 28) {
+                    $suce = 28;
+                    $ante = 28;
+                } else {
+                    $suce = $contador + 1;
+                    if ($suce == 28) {
+                        $suce = 1;
+                    }
+                    $ante = $contador - 1;
+                    if ($ante == 0) {
+                        $ante = 27;
+                    }
                 }
-                $i++;
-            } while (sizeof($letras) > $i);
-            print $contador;
-            $suce = $contador + 1;
-            $ante = $contador - 1;
-            $duplas[$y] = $letras[$ante] . $letras[$suce];
+                $duplas[$y] = $letras[$ante] . $letras[$suce];
+            }
+            for ($i = 0; $i < sizeof($duplas); $i++) {
+                print "<span>$duplas[$i]</span>";
+            }
+        } else {
+            echo 'Não há mensagem para ser decodificada';
         }
     }
 }
